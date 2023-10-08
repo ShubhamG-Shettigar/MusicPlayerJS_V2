@@ -1,94 +1,95 @@
 *,
 *::before,
-*::after{
+*::after {
     margin: 0;
     padding: 0%;
     box-sizing: border-box;
 }
 
-html{
+html {
     font-size: 62.5%;
     /* font-family: Dela Gothic One; */
     font-family: 'Dela Gothic One', serif;
     /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
 }
 
-.main_div{
+.main_div {
     width: 100vw;
     height: 100vh;
-    background-color: aqua;
+    background: rgb(15, 15, 15);
+    background: radial-gradient(circle, rgba(15, 15, 15, 1) 10%, rgba(88, 88, 90, 1) 39%, rgba(250, 250, 250, 1) 100%);
     display: grid;
     place-items: center;
 }
 
-.music_container{
+.music_container {
     /* 1rem == 10px */
-    width: 35rem;       
+    width: 35rem;
     height: 55rem;
-    background-color: yellowgreen;
+    background-color: rgba(196, 196, 197, 100);
     border-radius: 2rem;
     /* horizontal offset, vertical offset, blur, spread, pure black with 0.2 opacity */
-    box-shadow: 0 1.2rem 3rem 0.5rem rgba(0,0,0,0.2);
+    box-shadow: 0 1.2rem 3rem 0.5rem rgba(0, 0, 0, 0.2);
     padding: 3rem;
     text-align: center;
 }
 
-.music_container #title{
+.music_container #title {
     text-transform: uppercase;
     letter-spacing: 0.2rem;
     word-spacing: 0.5rem;
-    color: brown;
+    color: #4a4948;
     /* margin  :::  top right bottom left*/
-    margin: 2rem 0 0.5rem 0;  
+    margin: 2rem 0 0.5rem 0;
     font-size: 2.5rem;
     font-weight: 5000;
-    text-shadow: 0 0.3rem 0.5rem rgba(0,0,0,0.3);
+    text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.3);
 }
 
-.music_container #artist{
+.music_container #artist {
     text-transform: capitalize;
     letter-spacing: 0.1rem;
     /* word-spacing: 0.5rem; */
-    color: rgb(215, 32, 63);
+    color: #a4a29f;
     /* margin  :::  top right bottom left*/
-    margin: 0 0 4rem 0;  
+    margin: 0 0 4rem 0;
     font-size: 2rem;
-    font-weight: 500;
+    font-weight: 50;
     /* text-shadow: 0 0.3rem 0.5rem rgba(0,0,0,0.3); */
 }
 
-.img_container{
+.img_container {
     width: 25rem;
     height: 25rem;
     margin: auto;
 }
 
-img{
+img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    box-shadow: 0 1.2rem 3rem 0.5rem rgba(0,0,0,0.4);
+    box-shadow: 0 1.2rem 3rem 0.5rem rgba(0, 0, 0, 0.4);
 }
 
 
-.music_controls{
+.music_controls {
     width: 20rem;
     display: flex;
     justify-content: space-between;
     margin: auto;
-    margin-top: 4rem;
+    margin-top: 1rem;
     align-items: center;
 }
 
-.music_controls .fas{
+.music_controls .fas {
     color: #111111;
     font-size: 2rem;
     cursor: pointer;
-    filter: drop-shadow(0 1.2rem 3rem 0.5rem rgba(0,0,0,0.4));
+    filter: drop-shadow(0 1.2rem 3rem 0.5rem rgba(0, 0, 0, 0.4));
 }
 
-.music_controls .main_button{
+.music_controls .main_button {
     width: 5rem;
     height: 5rem;
     border-radius: 50%;
@@ -100,27 +101,77 @@ img{
     font-size: 1.4rem;
 }
 
-.music_controls .fas:hover{
+.music_controls .fas:hover {
     color: grey;
 }
 
-.music_controls .fa-play:hover{
+.music_controls .fa-play:hover {
     background-color: #f6f6f6;
     color: black;
-    box-shadow: 0 1.2rem 3rem 0.5rem rgba(0,0,0,0.4);
+    box-shadow: 0 1.2rem 3rem 0.5rem rgba(0, 0, 0, 0.4);
 }
 
-.anime{
+.anime {
     animation: rotatePlayer 10s linear infinite;
 }
 
 @keyframes rotatePlayer {
-    from{
+    from {
         transform: rotate(0deg);
     }
-    to{
+
+    to {
         transform: rotate(360deg);
     }
 }
 
 
+.progressBar_container {
+    width: 100%;
+    height: auto;
+    padding: 1rem 0;
+    margin-top: 1rem;
+}
+
+
+.progress_div {
+    width: 100%;
+    height: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.4), 0 16px 32px rgba(0, 0, 0, 0.4), 0 32px 64px rgba(0, 0, 0, 0.4);
+    border-radius: 4rem;
+    position: relative;
+    margin-top: 0.5rem;
+    transition: all 1s linear;
+    /* For Mozilla and Opera */
+    -moz-transition: all 1s linear;
+    -o-transition: all 1s linear;
+    /* For Chrome and Safari */
+    -webkit-transition: all 1s linear;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+
+.progress {
+    /* Linked to Progress_Div(above)  */
+    /* Thus inherits position Property of progress_div */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: black;
+    border-radius: 4rem;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+
+.progressDuration_meter {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+}

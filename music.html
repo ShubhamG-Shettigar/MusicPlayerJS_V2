@@ -1,25 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript Music Player</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dela+Gothic+One">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 </head>
+
 <body>
     <div class="main_div">
         <div class="music_container">
-            <h2 id="title">Yahhooo B aaa</h2>
-            <h3 id="artist">KK</h3>
+            <h2 id="title">Labon Ko</h2>
+            <h3 id="artist">Pritam, KK</h3>
             <div class="img_container">
                 <img src="images/LabonKo.jpg" alt="First Image">
             </div>
             <!-- <audio src="Music/Labon Ko (Bhool Bhulaiyaa)-(PagalWorld.Ink).mp3" controls></audio> -->
             <audio src="Music/LabonKo.mp3"></audio>
+
+
+            <!-- Progress Bar -->
+            <div class="progressBar_container" id="progress_container">
+                <div class="progressDuration_meter">
+                    <div id="current_time">
+                        0:00
+                    </div>
+                    <div id="duration">
+                        5:43
+                    </div>
+                </div>
+                <div class="progress_div" id="progress_div">
+                    <div class="progress" id="progress">
+
+                    </div>
+                </div>
+            </div>
+
 
 
             <!-- Music Controls -->
@@ -42,22 +65,27 @@
         const prev = document.getElementById('prev');
         const next = document.getElementById('next');
 
+        // Let because it will change dynamically
+        let progress = document.getElementById("progress");
+        let tot_duration = document.getElementById("duration");
+        let current_time = document.getElementById("current_time");
+        const progress_div = document.getElementById("progress_div");
 
         const songs = [
             {
-                name:"LabonKo", title:"Labon Ko", artist: "Pritam, KK"
+                name: "LabonKo", title: "Labon Ko", artist: "Pritam, KK"
             },
             {
-                name:"Chaleya", title:"Challeya", artist: "Shubham"
+                name: "Chaleya", title: "Challeya", artist: "Arijit S, Shilpa R"
             },
             {
-                name:"OhHumsafar", title:"Oh Humsafar", artist: "Neha Kakkar"
+                name: "OhHumsafar", title: "Oh Humsafar", artist: "Neha Kakkar"
             },
         ];
 
         let isPlaying = false;
 
-        const playMusic =  () => {
+        const playMusic = () => {
             isPlaying = true;
             music.play();
             play.classList.replace('fa-play', 'fa-pause');
@@ -73,8 +101,6 @@
 
 
         play.addEventListener("click", () => {
-            // if(isPlaying) pauseMusic();
-            // else playMusic();
             isPlaying ? pauseMusic() : playMusic();
         })
 
@@ -88,17 +114,55 @@
         songIndex = 0;
         // loadSong(songs[0])
         const nextSong = () => {
-            songIndex = (songIndex + 1) % songs.length; 
+            songIndex = (songIndex + 1) % songs.length;
             loadSong(songs[songIndex]);
             playMusic();
         }
         const prevSong = () => {
-            songIndex = (songIndex - 1 + songs.length) % songs.length; 
+            songIndex = (songIndex - 1 + songs.length) % songs.length;
             loadSong(songs[songIndex]);
             playMusic();
         }
+
+        // JavaScript for Progress Bar
+        // Timeupdate event is used whenever there is an update in the time(1 second mei 4 times)
+        music.addEventListener('timeupdate', (event) => {
+            // console.log(event);
+            const { currentTime, duration } = event.srcElement;
+            // Let because it will change dynamically
+            let progress_time = (currentTime / duration) * 100;
+            // Because width property accepts values ending with %
+            progress.style.width = `${progress_time}%`;
+
+
+            // Total Duration Update
+            let min_duration = Math.floor(duration / 60);
+            let sec_duration = Math.floor(duration % 60);
+            if (sec_duration < 10) sec_duration = `0${sec_duration}`;
+            let total_duration = `${min_duration}:${sec_duration}`;
+            if (duration) tot_duration.textContent = `${total_duration}`;
+
+            // Current Duration Update
+            let min_currentTime = Math.floor(currentTime / 60);
+            let sec_currentTime = Math.floor(currentTime % 60);
+            if (sec_currentTime < 10) sec_currentTime = `0${sec_currentTime}`;
+            let total_currentTime = `${min_currentTime}:${sec_currentTime}`;
+            current_time.textContent = `${total_currentTime}`;
+        });
+
+
+        progress_div.addEventListener("click", (event) => {
+            const { duration } = music;
+            let move_progress = (event.offsetX / event.srcElement.clientWidth) * duration;
+            // console.log(move_progress);
+            music.currentTime = move_progress;
+        });
+
+        music.addEventListener('ended', nextSong);
         next.addEventListener('click', nextSong);
         prev.addEventListener('click', prevSong);
+
     </script>
 </body>
+
 </html>
